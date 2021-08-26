@@ -4,11 +4,7 @@ import './css/index.css';
 import Vitrine from './components/Vitrine';
 
 
-import {
-  BrowserRouter,
-  Switch,
-  Route
-} from "react-router-dom";
+
 import reportWebVitals from './reportWebVitals';
 
 
@@ -16,11 +12,8 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
   
   
-  <BrowserRouter>
-  <Switch>
-  <Route path="/" exact= {true} component={Vitrine} />
-  </Switch>
- </BrowserRouter>
+  
+ <Vitrine />
 
  ,
   document.getElementById('root')

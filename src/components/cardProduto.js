@@ -8,8 +8,6 @@ import { FaWindowClose } from "react-icons/fa";
 function CardProduto(props) {
   const [quantidade, setQuantidade] = useState(0);
 
-  const [prod, setProd] = useState([]);
-
   function addQuantidade() {
     setQuantidade(quantidade + 1);
   }
@@ -17,13 +15,29 @@ function CardProduto(props) {
   function removerQuantidade() {
     setQuantidade(quantidade - 1);
   }
-  function addCarrinho() {
-    setProd(
-      prod.push(props.prodNome, quantidade, props.prodPreco * quantidade)
-    );
 
-    alert(prod);
+  // criei o state para receber os detalhes da compra
+  const [prod, setProd] = useState([]);
+
+  function addCarrinho() {
+    //trasformei o objeto prod em array(produto) para que o push funcione
+    const produto = Array.from(prod);
+
+    produto.push({
+      nomeDoProduto: props.prodNome,
+      "quantidadeDoProduto: ": quantidade,
+      "preçoDoProduto: ": props.prodPreco * quantidade,
+    });
+
+    setProd(produto);
+    console.log(prod);
   }
+
+  const listaProduto = prod.map((item) => (
+    <li key={item.toString()}>{item.prod}</li>
+  ));
+
+  //funções que disparam avisos para exibir ou nao o carrinho
 
   const [carrinho, setCarrinho] = useState(false);
 
@@ -77,18 +91,18 @@ function CardProduto(props) {
           <p>R$: {props.prodPreco} </p>
         </div>
 
-        <div class="container">
-          <div class="row">
+        <div className="container">
+          <div className="row">
             {/* controles cartão Produto */}
             <div className="col-12">
               <p className="quantidade">
                 <b>Quantidade:</b>
               </p>
-              </div>
-              <div className="col-12">
-              <div class="input-group mb-3 container">
+            </div>
+            <div className="col-12">
+              <div className="input-group mb-3 container">
                 <button
-                  class="btn btn-outline-secondary"
+                  className="btn btn-outline-secondary"
                   type="button"
                   onClick={removerQuantidade}
                 >
@@ -96,7 +110,7 @@ function CardProduto(props) {
                 </button>
 
                 <button
-                  class="btn btn-outline-secondary"
+                  className="btn btn-outline-secondary"
                   type="button"
                   onClick={addQuantidade}
                 >
@@ -105,7 +119,7 @@ function CardProduto(props) {
 
                 <input
                   type="number"
-                  class="form-control"
+                  className="form-control"
                   placeholder=""
                   aria-label="Example text with two button addons"
                   value={quantidade}
@@ -113,7 +127,7 @@ function CardProduto(props) {
 
                 <button
                   type="button"
-                  class="btn btn-warning"
+                  className="btn btn-warning"
                   onClick={addCarrinho}
                 >
                   Adicionar ao carrinho
@@ -124,18 +138,21 @@ function CardProduto(props) {
           {/* controles cartão Produto */}
           <div className="row">
             <div className="col-12">
-            <div class="d-grid gap-2 col-6 mx-auto">
-            <button
-          type="button"
-          class="btn btn-danger mt-5 bottom-0 btn-block mb-4"
-          onClick={exibeCarrinho}
-        >
-          <AiOutlineShoppingCart onClick={exibeCarrinho} />
-          Exibir carrinho
-        </button>
-        </div>
+              <div className="d-grid gap-2 col-6 mx-auto">
+                <button
+                  type="button"
+                  className="btn btn-danger mt-5 bottom-0 btn-block mb-4"
+                  onClick={exibeCarrinho}
+                >
+                  <AiOutlineShoppingCart onClick={exibeCarrinho} />
+                  Exibir carrinho
+                </button>
+              </div>
+              <ul>
+                {listaProduto}
+              </ul>
+            </div>
           </div>
-        </div>
         </div>
         {close}
         {list}
